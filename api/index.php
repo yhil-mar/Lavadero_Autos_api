@@ -8,6 +8,8 @@ require_once('autoload.php');
 
 require_once('src/creationTables/CarsTable.php');
 
+require_once('src/creationTables/ServicesTable.php');
+
 require_once('src/routes/index.php');
 
 ?>

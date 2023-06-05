@@ -6,6 +6,7 @@
     // Importación de los controllers
     use Src\Controllers\PostCars;
     use Src\Controllers\PostWorkers;
+    use Src\Controllers\PostServices;
 
     // Por ahora se pondrán todas las rutas por acá, más adelante se modularizará mejor para cada modelo y sus consultas
 
@@ -16,10 +17,14 @@
     });
 
     Route::post('/cars', [PostCars::class, 'postCars']);
-
+    
     // Consultas para /workers
-
+    
     Route::post('/workers', [PostWorkers::class, 'postWorkers']);
 
+    // Consultas para /services
+    
+    Route::post('/services', [PostServices::class,'postServices']);
+    
     Route::dispatch();
 ?>

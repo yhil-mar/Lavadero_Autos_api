@@ -10,6 +10,10 @@
 
     require_once('src/creationTables/WorkersTable.php');
 
+    require_once('src/creationTables/ServicesTable.php');
+
+    require_once('src/routes/index.php');
+    
     require_once('src/routes/index.php');
 
 ?>

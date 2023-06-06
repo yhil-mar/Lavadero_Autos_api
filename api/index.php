@@ -12,8 +12,8 @@
 
     require_once('src/creationTables/ServicesTable.php');
 
+    require_once('src/creationTables/OrdersTable.php');
+
     require_once('src/routes/index.php');
     
-    require_once('src/routes/index.php');
-
 ?>

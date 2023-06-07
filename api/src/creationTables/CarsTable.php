@@ -16,8 +16,7 @@ class CarsTable {
     public function createCars () {
         
         $query = "CREATE TABLE IF NOT EXISTS cars (
-            id INT(11) AUTO_INCREMENT PRIMARY KEY,
-            matricula VARCHAR(6) UNIQUE NOT NULL,
+            id VARCHAR(6) PRIMARY KEY,  # El ID será la patente del vehículo
             tipo VARCHAR(255) NOT NULL,
             whatsapp INT(13) NOT NULL,
             cliente VARCHAR(100),

@@ -20,18 +20,20 @@ class Order extends Model {
                             
                             switch ($elemKey) {
                                 case 'idService':
+
                                     $idService = $elemValue;
-                                    $sqlMatricula = "SELECT matricula FROM cars WHERE id = {$idVehicle}";
-                                    $arregloMatricula = $this->query($sqlMatricula)->first();
-                                    $matriculaVehículo = $arregloMatricula['matricula'];
-                                    $orderService = $matriculaVehículo;
+
                                     break;
+
                                 case 'date':
+
                                     $date = $elemValue;
-                                    $orderService = $matriculaVehículo . '-' . $date;
+                                    $orderService = $idVehicle . '-' . $date;
+                                    
                                     break;
                                 
                                 case 'workers':
+
                                     $amountWorkers = count($elemValue);
                                     $sqlService = "SELECT costo FROM services WHERE id = {$idService}";
                                     $arregloCosto = $this->query($sqlService)->first();
@@ -43,8 +45,10 @@ class Order extends Model {
 
                                         $sql = "INSERT INTO {$this->table} (order_service, car_id, service_id, worker_id, fractional_cost, total_cost, order_date) VALUES ('$orderService', '$idVehicle', '$idService', '$idWorker', '$fraccion', '$costo', '$date')";
                                         $this->query($sql);
-                                        // $insert_id = $this->connection->insert_id;
                                     }
+
+                                    break;
+
                                 default:
                                     break;
                             }

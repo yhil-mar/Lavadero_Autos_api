@@ -14,7 +14,7 @@ class OrdersTable {
         $query = "CREATE TABLE IF NOT EXISTS orders (
             id INT(11) AUTO_INCREMENT PRIMARY KEY,
             order_service VARCHAR(26),
-            car_id INT,
+            car_id VARCHAR(6),
             service_id INT,
             worker_id INT,
             fractional_cost INT(12) NOT NULL,

@@ -61,7 +61,8 @@
             
             $insert_id = $this->connection->insert_id;
         
-            return $this->find($insert_id);
+            // return $this->find($insert_id);
+            return ["status" => "created"];
         }
 
         // Consulta para modificar un registro en un modelo

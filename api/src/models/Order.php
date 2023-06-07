@@ -17,13 +17,20 @@ class Order extends Model {
                     foreach($value as $serviceKey => $serviceValue) {
 
                         foreach($serviceValue as $elemKey => $elemValue) {
-
+                            
                             switch ($elemKey) {
                                 case 'idService':
+
                                     $idService = $elemValue;
+                                    $sqlMatricula = "SELECT matricula FROM cars WHERE id = {$idVehicle}";
+                                    $arregloMatricula = $this->query($sqlMatricula)->first();
+                                    $matriculaVehículo = $arregloMatricula['matricula'];
+                                    $orderService = $matriculaVehículo;
+
                                     break;
                                 case 'date':
                                     $date = $elemValue;
+                                    $orderService = $matriculaVehículo . '-' . $date;
                                     break;
                                 
                                 case 'workers':
@@ -36,9 +43,8 @@ class Order extends Model {
                                     
                                     foreach($elemValue as $idWorker) {
 
-                                        $sql = "INSERT INTO {$this->table} (car_id, service_id, worker_id, fractional_cost, order_date) VALUES ($idVehicle, '$idService', '$idWorker', '$fraccion', '$date')";
+                                        $sql = "INSERT INTO {$this->table} (order_service, car_id, service_id, worker_id, fractional_cost, total_cost, order_date) VALUES ('$orderService', '$idVehicle', '$idService', '$idWorker', '$fraccion', '$costo', '$date')";
                                         $this->query($sql);
-                                        // $insert_id = $this->connection->insert_id;
                                     }
                                 default:
                                     break;

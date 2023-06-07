@@ -67,7 +67,13 @@
 
         // Consulta para modificar un registro en un modelo
         public function update($id, $data) {
+
             $fields = [];
+
+            // Query para obtener las columnas de la tabla y así obtener la PK
+            $sqlPK = "SHOW KEYS FROM {$this->table} WHERE Key_name = 'PRIMARY'";
+
+            $primaryKeyColumn = $this->query($sqlPK)->first()['Column_name'];
 
             foreach($data as $key => $value) {
                 $fields[] = "{$key} = '{$value}'";
@@ -75,11 +81,13 @@
 
             $fields = implode(', ', $fields);
 
-            $sql = "UPDATE {$this->table} SET {$fields} WHERE id = {$id}";
+            $sql = "UPDATE {$this->table} SET {$fields} WHERE {$primaryKeyColumn} = {$id}";
             
             $this->query($sql);
 
-            return $this->find($id);
+            // return $this->find($id);
+            return ["status" => "updated"];
+
         }
 
         // Consulta para eliminar un registro de un modelo

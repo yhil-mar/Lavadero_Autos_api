@@ -28,22 +28,22 @@ class Order extends Model {
                                 case 'date':
 
                                     $date = $elemValue;
-                                    $orderService = $idVehicle . '-' . $date;
+                                    $orderService = $idVehicle . $date;
                                     
                                     break;
                                 
                                 case 'workers':
 
                                     $amountWorkers = count($elemValue);
-                                    $sqlService = "SELECT costo FROM services WHERE id = {$idService}";
+                                    $sqlService = "SELECT cost FROM services WHERE id = {$idService}";
                                     $arregloCosto = $this->query($sqlService)->first();
-                                    $costo = $arregloCosto['costo'];
+                                    $costo = $arregloCosto['cost'];
 
                                     $fraccion = ceil($costo / $amountWorkers); // preguntar cuantos decimales dejar
                                     
                                     foreach($elemValue as $idWorker) {
 
-                                        $sql = "INSERT INTO {$this->table} (order_service, car_id, service_id, worker_id, fractional_cost, total_cost, order_date) VALUES ('$orderService', '$idVehicle', '$idService', '$idWorker', '$fraccion', '$costo', '$date')";
+                                        $sql = "INSERT INTO {$this->table} (orderService, carId, serviceId, workerId, fractionalCost, totalCost, orderDate) VALUES ('$orderService', '$idVehicle', '$idService', '$idWorker', '$fraccion', '$costo', '$date')";
                                         $this->query($sql);
                                     }
 
@@ -59,6 +59,30 @@ class Order extends Model {
             }
 
             echo('Información cargada');
+
+        }
+
+        public function updateOrders($orderService, $body) {
+
+            $fields = [];
+
+            foreach($body as $key => $value) {
+                $fields[] = "{$key} = '{$value}'";
+            }
+
+            
+            $fields = implode(', ', $fields);
+            // echo($fields);
+
+            // $sql = "UPDATE {$this->table} SET {$fields} WHERE orderService = {$orderService}";
+            $sql = "SELECT * FROM {$this->table} WHERE orderService = 'ASR75220230607165343'";
+            
+            $result = $this->query($sql)->get();
+
+            echo print_r($result);
+
+            // return $this->find($id);
+            return ["status" => "updated"];
 
         }
         

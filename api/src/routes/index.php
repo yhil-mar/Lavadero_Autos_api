@@ -7,6 +7,7 @@
     use Src\Controllers\PostCars;
     use Src\Controllers\PostWorkers;
     use Src\Controllers\PostServices;
+    use Src\Controllers\PostOrders;
 
     // Por ahora se pondrán todas las rutas por acá, más adelante se modularizará mejor para cada modelo y sus consultas
 
@@ -25,6 +26,10 @@
     // Consultas para /services
     
     Route::post('/services', [PostServices::class,'postServices']);
+
+    // Consultar para /orders
+
+    Route::post('/orders', [PostOrders::class,'postOrders']);
     
     Route::dispatch();
 ?>

@@ -48,8 +48,6 @@
 
         // Consulta para crear un registro en un modelo
         public function create($data) {
-
-            // echo($insert_id);
             
             $columns = array_keys($data);
             $columns = implode(', ', $columns);

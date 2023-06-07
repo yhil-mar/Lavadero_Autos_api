@@ -13,14 +13,16 @@ class OrdersTable {
         
         $query = "CREATE TABLE IF NOT EXISTS orders (
             id INT(11) AUTO_INCREMENT PRIMARY KEY,
-            service_id INT(11) NOT NULL,
-            car_id INT(11) NOT NULL,
-            order_date DATETIME NOT NULL,
+            order_service INT,
+            car_id INT,
+            service_id INT,
+            worker_id INT,
             fractional_cost INT(12) NOT NULL,
-            total_cost INT(12) NOT NULL,
-            order_status ENUM('pending', 'completed', 'cancelled') NOT NULL,
+            order_date DATETIME NOT NULL,
+            order_status ENUM('pending', 'completed', 'cancelled') DEFAULT 'pending',
+            FOREIGN KEY (car_id) REFERENCES cars(id),
             FOREIGN KEY (service_id) REFERENCES services(id),
-            FOREIGN KEY (car_id) REFERENCES cars(id)
+            FOREIGN KEY (worker_id) REFERENCES workers(id)
         )";
         
         $this->connection->query($query);

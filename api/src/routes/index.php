@@ -25,6 +25,8 @@
     use Src\Controllers\GetOrders;
     use Src\Controllers\PutOrders;
 
+    use Src\Controllers\GetPrueba;
+
     // Por ahora se pondrán todas las rutas por acá, más adelante se modularizará mejor para cada modelo y sus consultas
 
     // Consultas para /cars
@@ -58,6 +60,9 @@
     Route::get('/orders', [GetOrders::class, 'getOrders']);
 
     Route::put('/orders/:orderService', [PutOrders::class,'putOrders']);
+
+
+    Route::get('/prueba', [GetPrueba::class, 'getPrueba']);
     
     Route::dispatch();
 ?>

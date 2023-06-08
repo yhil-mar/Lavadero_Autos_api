@@ -27,8 +27,17 @@ class Order extends Model {
 
                                 case 'date':
 
-                                    $date = $elemValue;
-                                    $orderService = $idVehicle . $date . $idService;
+                                    $orderYear = substr($elemValue, 0, 4);
+                                    $orderMonth = substr($elemValue, 4, 2);
+                                    $orderDay = substr($elemValue, 6, 2);
+                                    $orderHour = substr($elemValue, 8, 4);
+
+                                    $hour = substr($orderHour, 0, 2);
+                                    $minutes = substr($orderHour, 2, 2);
+
+                                    $finalHour = date("H:i:s", strtotime("$hour:$minutes"));
+                                    
+                                    $orderService = $idVehicle . $orderYear . $orderMonth . $orderDay . $orderHour . $idService;
                                     
                                     break;
                                 
@@ -43,8 +52,8 @@ class Order extends Model {
                                     
                                     foreach($elemValue as $idWorker) {
 
-                                        $sql = "INSERT INTO {$this->table} (orderService, carId, serviceId, workerId, fractionalCost, totalCost, orderDate)
-                                            VALUES ('$orderService', '$idVehicle', '$idService', '$idWorker', '$fraccion', '$costo', '$date')";
+                                        $sql = "INSERT INTO {$this->table} (orderService, carId, serviceId, workerId, fractionalCost, totalCost, orderDay, orderMonth, orderYear, orderHour)
+                                            VALUES ('$orderService', '$idVehicle', '$idService', '$idWorker', '$fraccion', '$costo', '$orderDay', '$orderMonth', '$orderYear', '$finalHour')";
 
                                         $this->query($sql);
                                     }

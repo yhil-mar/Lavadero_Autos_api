@@ -4,13 +4,15 @@
 
     use Src\Models\Car;
 
-    class GetCarByLicense {
+    class GetPrueba {
         
-        public function getCarByLicense ($id) {
+        public function getPrueba () {
 
             $carModel = new Car();
 
-            $response = $carModel->where("licensePlate", $id)->first();
+            $sql = "SELECT * FROM services";
+
+            $response = $carModel->query($sql);
 
             if (!$response) {
 

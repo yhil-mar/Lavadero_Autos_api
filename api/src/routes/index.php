@@ -55,7 +55,7 @@
 
     Route::get('/orders', [GetOrders::class, 'getOrders']);
 
-    // Route::put('/orders/:orderService', [PutOrders::class,'putOrders']);
+    Route::put('/orders/:orderService', [PutOrders::class,'putOrders']);
     
     Route::dispatch();
 ?>

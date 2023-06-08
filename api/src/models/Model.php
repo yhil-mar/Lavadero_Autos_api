@@ -47,6 +47,20 @@
             return $this->query($sql)->first();
         }
 
+        // Consulta para buscar registros. Se debe especificar la propiedad a buscar, un operador
+        // que es opcional y puede ser (<, >, >=, <=) y finalmente un valor para la propiedad
+        public function where($column, $operator, $value = null) {
+
+            if ($value == null) {
+                $value = $operator;
+                $operator = '=';
+            }
+
+            $sql = "SELECT * FROM {$this->table} WHERE {$column} {$operator} '{$value}'";
+            $this->query($sql);
+            return $this;
+        }
+
         // Consulta para crear un registro en un modelo
         public function create($data) {
             

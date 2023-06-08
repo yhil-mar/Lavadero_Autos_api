@@ -12,10 +12,10 @@
 
             if (isset($query) && !empty($query)) {
 
-                $column = $query[0];
-                $value = $query[1];
+                $column = key($query);
+                $value = current($query);
 
-                return $orderModel->where($column, $value);
+                return $orderModel->where($column, $value)->get();
             
             }
 

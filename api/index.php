@@ -2,6 +2,18 @@
 
     // header('Content-Type: application/json');
 
+    // Configurar encabezados para permitir peticiones desde cualquier origen
+    header("Access-Control-Allow-Origin: *");
+
+    // Configurar encabezados para permitir ciertos métodos HTTP
+    header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
+
+    // Configurar encabezados para permitir ciertos encabezados personalizados
+    header("Access-Control-Allow-Headers: Content-Type, Authorization");
+
+    // Permitir que las cookies se incluyan en las solicitudes (si es necesario)
+    header("Access-Control-Allow-Credentials: true");
+
     require_once('config/credentialsDb.php');
 
     require_once('autoload.php');

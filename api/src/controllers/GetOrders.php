@@ -12,10 +12,50 @@
 
             if (isset($query) && !empty($query)) {
 
-                $column = key($query);
-                $value = current($query);
+                $amountQuery = count($query);
 
-                return $orderModel->where($column, $value)->get();
+                if ($amountQuery < 2) {
+
+                    $column = key($query);
+                    $value = current($query);
+    
+                    return $orderModel->where($column, $value)->get();
+
+                } else {
+
+                    
+
+                    // foreach ($query as $queryKey => $queryValue) {
+
+                    //     switch ($key) {
+                    //         case 'workerId':
+
+                    //            $result = $orderModel->where($queryKey, $queryValue)->get();
+
+                    //         break;
+
+                    //         case 'date1':
+
+                    //             foreach ($result as $resultKey => $resultValue) {
+                    //                 if () {
+
+                    //                 }
+                    //             }
+                            
+                    //         break;
+
+                    //         case 'date2':
+
+                    //         break;
+
+                    //         default:
+
+                    //         break;
+                    //     }
+                    // }
+
+                }
+
             
             }
 

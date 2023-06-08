@@ -15,9 +15,12 @@
 
     // Controllers para /services
     use Src\Controllers\PostServices;
+    use Src\Controllers\GetAllServices;
+    use Src\Controllers\PutServices;
 
     // Controllers para /orders
     use Src\Controllers\PostOrders;
+    // use Src\Controllers\GetOrders;
     use Src\Controllers\PutOrders;
 
     // Por ahora se pondrán todas las rutas por acá, más adelante se modularizará mejor para cada modelo y sus consultas
@@ -38,10 +41,17 @@
     
     Route::post('/services', [PostServices::class,'postServices']);
 
+    Route::get('/services', [GetAllServices::class,'getAllServices']);
+
+    Route::put('/services/:id', [PutServices::class,'putServices']);
+
     // Consultar para /orders
 
     Route::post('/orders', [PostOrders::class,'postOrders']);
-    Route::put('/orders/:orderService', [PutOrders::class,'putOrders']);
+
+    Route::get('/orders/filter', [GetOrders::class, 'getOrders']);
+
+    // Route::put('/orders/:orderService', [PutOrders::class,'putOrders']);
     
     Route::dispatch();
 ?>

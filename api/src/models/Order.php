@@ -28,7 +28,7 @@ class Order extends Model {
                                 case 'date':
 
                                     $date = $elemValue;
-                                    $orderService = $idVehicle . $date;
+                                    $orderService = $idVehicle . $date . $idService;
                                     
                                     break;
                                 
@@ -43,7 +43,9 @@ class Order extends Model {
                                     
                                     foreach($elemValue as $idWorker) {
 
-                                        $sql = "INSERT INTO {$this->table} (orderService, carId, serviceId, workerId, fractionalCost, totalCost, orderDate) VALUES ('$orderService', '$idVehicle', '$idService', '$idWorker', '$fraccion', '$costo', '$date')";
+                                        $sql = "INSERT INTO {$this->table} (orderService, carId, serviceId, workerId, fractionalCost, totalCost, orderDate)
+                                            VALUES ('$orderService', '$idVehicle', '$idService', '$idWorker', '$fraccion', '$costo', '$date')";
+
                                         $this->query($sql);
                                     }
 
@@ -69,19 +71,13 @@ class Order extends Model {
             foreach($body as $key => $value) {
                 $fields[] = "{$key} = '{$value}'";
             }
-
             
             $fields = implode(', ', $fields);
-            // echo($fields);
 
-            // $sql = "UPDATE {$this->table} SET {$fields} WHERE orderService = {$orderService}";
-            $sql = "SELECT * FROM {$this->table} WHERE orderService = 'ASR75220230607165343'";
+            $sql = "UPDATE {$this->table} SET {$fields} WHERE orderService = '{$orderService}'";
             
-            $result = $this->query($sql)->get();
+            $this->query($sql);
 
-            echo print_r($result);
-
-            // return $this->find($id);
             return ["status" => "updated"];
 
         }

@@ -36,6 +36,7 @@
 
         // Consulta para traer todos los registros de una tabla
         public function all() {
+
             $sql = "SELECT * FROM {$this->table}";
             return $this->query($sql)->get();
         }
@@ -70,7 +71,7 @@
 
             $fields = [];
 
-            // Query para obtener las columnas de la tabla y así obtener la PK
+            // Query para obtener la columna que contiene la PK de la tabla
             $sqlPK = "SHOW KEYS FROM {$this->table} WHERE Key_name = 'PRIMARY'";
 
             $primaryKeyColumn = $this->query($sqlPK)->first()['Column_name'];

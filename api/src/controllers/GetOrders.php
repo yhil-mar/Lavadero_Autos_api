@@ -6,15 +6,24 @@
 
     class GetOrders {
         
-        public function getOrders() {
+        public function getOrders($query = null) {
 
             $orderModel = new Order();
 
-            $filter = $_GET['status'];
+            if (isset($query) && !empty($query)) {
 
-            echo($filter);
+                $column = $query[0];
+                $value = $query[1];
 
-            // return $orderModel->all();
+                return $orderModel->where($column, $value);
+            
+            }
+
+            else {
+
+                return $orderModel->all();
+
+            }
             
         }
 

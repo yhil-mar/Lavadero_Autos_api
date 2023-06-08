@@ -37,6 +37,15 @@ class Route {
         $uri = $_SERVER['REQUEST_URI'];
         $uri = trim($uri, '/');
         $method = $_SERVER['REQUEST_METHOD'];
+
+
+        // Obtener los parámetros del query string
+        $query = $_GET;
+
+        // Eliminar los parámetros del query string de la URI
+        $uri = strtok($uri, '?');
+
+
         foreach (self::$routes[$method] as $route => $cb) {
 
             // Si la ruta especificada en la petición contiene params, se preguntará antes si esa ruta contiene ":", y si lo contiene
@@ -64,9 +73,21 @@ class Route {
                 if (is_array($cb)) {
                     $controller = new $cb[0];
 
-                    if ($method == 'GET' || $method == 'DELETE') {
+                    if ($method == 'GET') {
 
-                        $response = $controller -> {$cb[1]}(...$params);
+                        if($query && !$params) {
+
+                            $response = $controller -> {$cb[1]}($query);
+
+                        } else if ($params) {
+
+                            $response = $controller -> {$cb[1]}(...$params);
+
+                        } else {
+
+                            $response = $controller -> {$cb[1]}();
+
+                        }
 
                     } else if ($method == 'POST') {
 
@@ -85,6 +106,11 @@ class Route {
                         $id = ($params[0]);
 
                         $response = $controller -> {$cb[1]}($id, $data);
+
+                    } else if ($method == 'DELETE') {
+
+                        $response = $controller -> {$cb[1]}(...$params);
+
                     }
 
                 }

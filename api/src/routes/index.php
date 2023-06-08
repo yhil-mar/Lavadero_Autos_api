@@ -21,7 +21,7 @@
 
     // Controllers para /orders
     use Src\Controllers\PostOrders;
-    // use Src\Controllers\GetOrders;
+    use Src\Controllers\GetOrders;
     use Src\Controllers\PutOrders;
 
     // Por ahora se pondrán todas las rutas por acá, más adelante se modularizará mejor para cada modelo y sus consultas
@@ -51,7 +51,7 @@
 
     Route::post('/orders', [PostOrders::class,'postOrders']);
 
-    Route::get('/orders/filter', [GetOrders::class, 'getOrders']);
+    Route::get('/orders', [GetOrders::class, 'getOrders']);
 
     // Route::put('/orders/:orderService', [PutOrders::class,'putOrders']);
     

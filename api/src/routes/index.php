@@ -8,6 +8,7 @@
     // Controllers para /cars
     use Src\Controllers\PostCars;
     use Src\Controllers\GetCarByLicense;
+    use Src\Controllers\PutCars;
 
     // Controllers para /workers
     use Src\Controllers\PostWorkers;
@@ -30,6 +31,7 @@
 
     Route::post('/cars', [PostCars::class, 'postCars']);
     Route::get('/cars/:id', [GetCarByLicense::class, 'getCarByLicense']);
+    Route::put('/cars/:id', [PutCars::class, 'putCars']);
     
     // Consultas para /workers
     

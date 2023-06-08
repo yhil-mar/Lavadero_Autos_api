@@ -30,7 +30,9 @@
     // Consultas para /cars
 
     Route::post('/cars', [PostCars::class, 'postCars']);
+
     Route::get('/cars/:id', [GetCarByLicense::class, 'getCarByLicense']);
+    
     Route::put('/cars/:id', [PutCars::class, 'putCars']);
     
     // Consultas para /workers

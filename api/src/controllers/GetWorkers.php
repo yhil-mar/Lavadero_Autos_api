@@ -6,11 +6,24 @@
 
     class GetWorkers {
         
-        public function getWorkers() {
+        public function getWorkers($query = null) {
 
             $workerModel = new Worker();
 
-            return $workerModel->all();
+            if (isset($query) && !empty($query)) {
+
+                $column = key($query);
+                $value = current($query);
+
+                return $workerModel->where($column, $value)->get();
+            
+            }
+
+            else {
+
+                return $workerModel->all();
+
+            }
             
         }
     }

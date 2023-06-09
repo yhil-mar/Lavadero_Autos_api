@@ -10,8 +10,17 @@
 
             $carModel = new Car();
 
-            return $carModel->create($body);
-            
+            $result = $carModel->create($body);
+
+            if (!is_array($result)) {
+                
+                return ["status" => "created"];
+                
+            } else {
+                
+                return $result;
+
+            }
         }
     }
 

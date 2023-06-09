@@ -10,9 +10,20 @@
 
             $workerModel = new Worker();
 
-            return $workerModel->create($body);
+            $result = $workerModel->create($body);
+
+            if (!is_array($result)) {
+                
+                return ["status" => "created"];
+                
+            } else {
+                
+                return $result;
+
+            }
             
         }
+            
     }
 
 ?>

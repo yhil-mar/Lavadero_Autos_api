@@ -10,14 +10,24 @@
 
             $carModel = new Car();
 
-            $response = $carModel->where("licensePlate", $id)->first();
+            $response = $carModel->where("licensePlate", $id);
 
-            if (!$response) {
-
-                return ["message" => "No results found"];
+            if (!is_array($response)) {
                 
-            } else {
+                $response = $response->first();
 
+                if ($response) {
+
+                    return $response;
+    
+                } else {
+    
+                    return ['status' => 'No results found'];
+    
+                }                                
+
+            } else {
+                
                 return $response;
 
             }

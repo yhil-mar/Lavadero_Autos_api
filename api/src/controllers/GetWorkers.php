@@ -10,21 +10,8 @@
 
             $workerModel = new Worker();
 
-            if (isset($query) && !empty($query)) {
+            return $workerModel->all();
 
-                $column = key($query);
-                $value = current($query);
-
-                return $workerModel->where($column, $value)->get();
-            
-            }
-
-            else {
-
-                return $workerModel->all();
-
-            }
-            
         }
     }
 

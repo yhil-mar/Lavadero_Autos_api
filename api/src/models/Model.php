@@ -2,16 +2,17 @@
 
     namespace Src\Models;
 
-    // require_once 'database.php';
-
     class Model {
     
         protected $connection;
 
         // Constructor que ejecutará la función de conexión que viene del archivo db.php
         public function __construct() {
+
             $database = new \Database();
+
             $this->connection = $database->getConnection();
+
         }
         
         // Método para realizar una consulta a la base de datos
@@ -25,6 +26,7 @@
                 
             } else {
                 
+                http_response_code(404);
                 return ["Query error: " => $this->connection->error];
 
             }
@@ -51,7 +53,6 @@
             $sql = "SELECT * FROM {$this->table}";
 
             $response = $this->query($sql);
-
             
             if (!is_array($response)) {
                 
@@ -76,6 +77,7 @@
             $sql = "SELECT * FROM {$this->table} WHERE {$column} {$operator} '{$value}'";
 
             return $this->query($sql);
+
         }
 
         // Consulta para crear un registro en un modelo
@@ -89,12 +91,8 @@
             
             $sql = "INSERT INTO {$this->table} ({$columns}) VALUES ({$values})";
             
-            $this->query($sql);
+            return $this->query($sql);
             
-            $insert_id = $this->connection->insert_id;
-        
-            // return $this->find($insert_id);
-            return ["status" => "created"];
         }
 
         // Consulta para modificar un registro en un modelo

@@ -10,7 +10,17 @@
 
             $productModel = new Product();
 
-            return $productModel->create($body);
+            $result = $productModel->create($body);
+
+            if (!is_array($result)) {
+                
+                return ["status" => "created"];
+                
+            } else {
+                
+                return $result;
+
+            }
             
         }
     }

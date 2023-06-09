@@ -69,7 +69,7 @@ class Order extends Model {
                 }
             }
 
-            echo('Información cargada');
+            return ['status' => 'Information uploaded'];
 
         }
 
@@ -88,6 +88,32 @@ class Order extends Model {
             $this->query($sql);
 
             return ["status" => "updated"];
+
+        }
+
+        public function findOrders($query) {
+
+            $sql = "SELECT * FROM {$this->table} WHERE ";
+            
+            foreach ($query as $column => $value) {  
+
+                $sql = $sql . "{$column} = '{$value}' AND ";
+                
+            }
+            
+            $sql = substr($sql, 0, -5);
+
+            $response = $this->query($sql);
+
+            if (!is_array($response)) {
+                                
+                return $response->get();
+
+            } else {
+                
+                return $response;
+
+            }
 
         }
         

@@ -7,8 +7,7 @@
     class PostServices {
         public function postServices($body) {
 
-            $serviceModel = new Service();
-            // echo ('Entró a service con POST');
+            $serviceModel = new Service();            
             return $serviceModel->create($body);
             
         }

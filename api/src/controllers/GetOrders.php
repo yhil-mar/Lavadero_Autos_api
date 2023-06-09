@@ -21,38 +21,50 @@
     
                     return $orderModel->where($column, $value)->get();
 
-                } else {
+                } else {                   
 
-                    
+                    foreach ($query as $queryKey => $queryValue) {
+                        switch ($queryKey) {
+                            case 'workerId':
 
-                    // foreach ($query as $queryKey => $queryValue) {
+                                $workerId= $queryValue;
 
-                    //     switch ($key) {
-                    //         case 'workerId':
+                                break;
+                            case 'date1':
 
-                    //            $result = $orderModel->where($queryKey, $queryValue)->get();
-
-                    //         break;
-
-                    //         case 'date1':
-
-                    //             foreach ($result as $resultKey => $resultValue) {
-                    //                 if () {
-
-                    //                 }
-                    //             }
+                                $startDate=$queryValue;                               
                             
-                    //         break;
+                            break;
+                            case 'date2':
 
-                    //         case 'date2':
+                                $endDate=$queryValue;                                
 
-                    //         break;
+                            break;
+                            default:
+                            break;
+                        }
+                    }
 
-                    //         default:
 
-                    //         break;
-                    //     }
-                    // }
+                    $startYear = substr($startDate, 0, 4);
+                    $startMonth = substr($startDate, 4, 2);
+                    $startDay = substr($startDate, 6, 2);
+
+                    $endYear = substr($endDate, 0, 4);
+                    $endMonth = substr($endDate, 4, 2);
+                    $endDay = substr($endDate, 6, 2);
+        
+                    $sql = "SELECT * FROM orders 
+                      WHERE workerId = $workerId 
+                      AND orderStatus = 'completed' 
+                      AND orderYear >= $startYear
+                      AND orderYear <= $endYear
+                      AND orderMonth >= $startMonth
+                      AND orderMonth <= $endMonth
+                      AND orderDay >= $startDay
+                      AND orderDay <= $endDay";
+                  
+                  return $orderModel->query($sql)->get();     
 
                 }
 

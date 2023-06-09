@@ -97,8 +97,8 @@
             $fields = implode(', ', $fields);
 
             $sql = "UPDATE {$this->table} SET {$fields} WHERE {$primaryKeyColumn} = '{$id}'";
-            
-            $this->query($sql);
+            echo($id);
+            $this->query($sql);            
 
             // return $this->find($id);
             return ["status" => "updated"];

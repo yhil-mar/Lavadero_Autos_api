@@ -25,6 +25,11 @@
     use Src\Controllers\GetOrders;
     use Src\Controllers\PutOrders;
 
+    // Controllers para /products
+    use Src\Controllers\PostProducts;
+    use Src\Controllers\PutProducts;
+
+
     use Src\Controllers\GetPrueba;
 
     // Por ahora se pondrán todas las rutas por acá, más adelante se modularizará mejor para cada modelo y sus consultas
@@ -60,6 +65,12 @@
     Route::get('/orders', [GetOrders::class, 'getOrders']);
 
     Route::put('/orders/:orderService', [PutOrders::class,'putOrders']);
+
+    // Consultar para /products
+
+    Route::post('/products', [PostProducts::class,'postProducts']);
+    Route::put('/products/:id', [PutProducts::class,'putProducts']);
+
 
 
     Route::get('/prueba', [GetPrueba::class, 'getPrueba']);

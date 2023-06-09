@@ -26,6 +26,8 @@
 
     require_once('src/creationTables/OrdersTable.php');
 
+    require_once('src/creationTables/ProductsTable.php');
+
     require_once('src/routes/index.php');
     
 ?>

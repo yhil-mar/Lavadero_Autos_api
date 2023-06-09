@@ -69,11 +69,11 @@
     // Consultar para /products
 
     Route::post('/products', [PostProducts::class,'postProducts']);
+
     Route::put('/products/:id', [PutProducts::class,'putProducts']);
 
 
-
-    Route::get('/prueba', [GetPrueba::class, 'getPrueba']);
+    Route::get('/prueba/:id', [GetPrueba::class, 'getPrueba']);
     
     Route::dispatch();
 ?>

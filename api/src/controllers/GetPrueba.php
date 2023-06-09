@@ -6,25 +6,24 @@
 
     class GetPrueba {
         
-        public function getPrueba () {
+        public function getPrueba ($id) {
 
             $carModel = new Car();
 
-            $sql = "SELECT * FROM services";
+            $response = $carModel->where("licensePlate", $id);
 
-            $response = $carModel->query($sql);
+            if (!is_array($response)) {
+                                
+                return $response->first();
 
-            if (!$response) {
-
-                return ["message" => "No results found"];
-                
             } else {
-
+                
                 return $response;
 
             }
             
         }
+        
     }
 
 ?>

@@ -117,18 +117,22 @@ class Route {
 
                 if(is_array($response) || is_object($response)) {
 
-                    // header('Content-Type: application/json');
-
                     echo json_encode($response);
+
                 } else {
+
                     echo $response;
+
                 }
+
                 return;
+                
             }
         }
 
         // Se enviará este mensaje si la ruta solicitada no existe
-        echo('404 Not Found');
+        http_response_code(404);
+        echo('Page not found');
     }
 };
 ?>

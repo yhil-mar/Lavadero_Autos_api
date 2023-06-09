@@ -16,8 +16,19 @@
         
         // Método para realizar una consulta a la base de datos
         public function query($sql) {
+            
             $this->query = $this->connection->query($sql);
-            return $this;
+            
+            if($this->query) {
+
+                return $this;
+                
+            } else {
+                
+                return ["Query error: " => $this->connection->error];
+
+            }
+
         }
 
         // ---- Métodos para obtener la información de la base de datos ---- //
@@ -38,13 +49,19 @@
         public function all() {
 
             $sql = "SELECT * FROM {$this->table}";
-            return $this->query($sql)->get();
-        }
 
-        // Consulta para encontrar un registro de una tabla por ID
-        public function find($id) {
-            $sql = "SELECT * FROM {$this->table} WHERE id = {$id}";
-            return $this->query($sql)->first();
+            $response = $this->query($sql);
+
+            
+            if (!is_array($response)) {
+                
+                return $response->get();
+                
+            } else {
+                
+                return $response;
+
+            }
         }
 
         // Consulta para buscar registros. Se debe especificar la propiedad a buscar, un operador
@@ -57,8 +74,8 @@
             }
 
             $sql = "SELECT * FROM {$this->table} WHERE {$column} {$operator} '{$value}'";
-            $this->query($sql);
-            return $this;
+
+            return $this->query($sql);
         }
 
         // Consulta para crear un registro en un modelo
@@ -97,7 +114,7 @@
             $fields = implode(', ', $fields);
 
             $sql = "UPDATE {$this->table} SET {$fields} WHERE {$primaryKeyColumn} = '{$id}'";
-            echo($id);
+
             $this->query($sql);            
 
             // return $this->find($id);

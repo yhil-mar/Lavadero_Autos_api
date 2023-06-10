@@ -26,65 +26,126 @@
 
                 $finalArray = [];
 
-                $contador = 0;
+                // $licensePlates = array_values(array_unique(array_column($result, 'carId')));
 
+                $previousLicense = null;
+
+                $previousService = null;
+
+                $previousOrder = null;
+
+                $contadorVehiculos = -1;
+                
                 foreach ($result as $service) {
 
-                    foreach ($service as $serviceKey => $serviceValue) {
+                    $currentLicense = $service['carId'];
 
-                        switch($serviceKey) {
-                            
-                            case 'carId':
-                                
-                                $sql = "SELECT * FROM cars WHERE licensePlate = '$serviceValue'";
-                                
-                                // echo ($serviceValue);
-                                $vehicleResult = $orderModel->query($sql);
+                    $currentService = $service['serviceId'];
+                    
+                    $currentWorker = $service['workerId'];
 
-                                $vehicleResult = $vehicleResult->first();
+                    $currentOrder = $service['orderService'];
 
-                                $finalArray[] = $vehicleResult;
+                    if ($currentLicense != $previousLicense) {
+                        
+                        $contadorVehiculos = $contadorVehiculos + 1;
+                        
+                        $contadorServicios = -1;
 
-                                $finalArray[$contador]['services'] = array();
+                        $contadorServicios = $contadorServicios + 1;
+
+                        $sql = "SELECT * FROM cars WHERE licensePlate = '$currentLicense'";
+                        
+                        $vehicleResult = $orderModel->query($sql);
+                        
+                        $vehicleResult = $vehicleResult->first();
+                        
+                        $finalArray[] = $vehicleResult;
+                        
+                        $finalArray[$contadorVehiculos]['services'] = array();
+                        
+
+                        $sql = "SELECT serviceName, cost FROM services WHERE id = '$currentService'";
+
+                        $serviceResult = $orderModel->query($sql);
+                        
+                        $serviceResult = $serviceResult->first();
+                        
+                        $finalArray[$contadorVehiculos]['services'][] = $serviceResult;
+                        
+                        $finalArray[$contadorVehiculos]['services'][0]['workers'] = array();
+                        
+                        
+                        $sql = "SELECT name FROM workers WHERE rut_passport = '$currentWorker'";
+                        
+                        $workerResult = $orderModel->query($sql);
+                        
+                        $workerResult = array_values($workerResult->first());
+                        
+                        $finalArray[$contadorVehiculos]['services'][0]['workers'] = $workerResult;
+                        
+
+                        $serviceDate = $service['orderDay'] . '-' . $service['orderMonth'] . '-' . $service['orderYear'] . ' ' . $service['orderHour'];
+
+                        $finalArray[$contadorVehiculos]['services'][0]['date'] = $serviceDate;
+
+
+                        $previousLicense = $currentLicense;
+
+                        $previousService = $currentService;
+
+                    } else {
+
+                        if ($currentService != $previousService || $currentOrder != $previousOrder) {
+
+                            $contadorServicios = $contadorServicios + 1;
+
+                            $sql = "SELECT serviceName, cost FROM services WHERE id = '$currentService'";
+
+                            $serviceResult = $orderModel->query($sql);
+                                    
+                            $serviceResult = $serviceResult->first();
+
+                            array_push($finalArray[$contadorVehiculos]['services'], $serviceResult);
+        
+                            $finalArray[$contadorVehiculos]['services'][$contadorServicios]['workers'] = array();
+
+
+                            $sql = "SELECT name FROM workers WHERE rut_passport = '$currentWorker'";
+
+                            $workerResult = $orderModel->query($sql);
+                                    
+                            $workerResult = array_values($workerResult->first());
     
-                                break;
-                            
-                            case 'serviceId':
+                            $finalArray[$contadorVehiculos]['services'][$contadorServicios]['workers'] = $workerResult;
 
-                                $sql = "SELECT serviceName, cost FROM services WHERE id = '$serviceValue'";
 
-                                $serviceResult = $orderModel->query($sql);
-                                
-                                $serviceResult = $serviceResult->first();
+                            $serviceDate = $service['orderDay'] . '-' . $service['orderMonth'] . '-' . $service['orderYear'] . ' ' . $service['orderHour'];
 
-                                $finalArray[$contador]['services'][] = $serviceResult;
+                            $finalArray[$contadorVehiculos]['services'][$contadorServicios]['date'] = $serviceDate;
 
-                                // $finalArray[$contador]['services']['workers'] = array();
 
-                                break;
-                            
-                            case 'workerId':
+                            $previousService = $currentService;
 
-                                
+                        } else {
 
-                                break;
-    
-                            default:
+                            $sql = "SELECT name FROM workers WHERE rut_passport = '$currentWorker'";
 
-                                break;
+                            $workerResult = $orderModel->query($sql);
+                                    
+                            $workerResult = array_values($workerResult->first());
+
+                            array_push($finalArray[$contadorVehiculos]['services'][$contadorServicios]['workers'], $workerResult[0]);
+
                         }
 
-                        
                     }
-                    
-                    $contador = $contador + 1;
-                    
-                    // echo print_r($service);
-                }
-                
-                return $finalArray;
 
-                // return $result;
+                    $previousOrder = $currentOrder;
+                        
+                }
+
+                return $finalArray;
 
             } else {
 

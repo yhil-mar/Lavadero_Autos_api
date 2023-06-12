@@ -29,6 +29,8 @@
     // Controllers para /products
     use Src\Controllers\PostProducts;
     use Src\Controllers\PutProducts;
+    use Src\Controllers\GetAllProducts;
+    use Src\Controllers\GetProductsById;
 
 
     // Por ahora se pondrán todas las rutas por acá, más adelante se modularizará mejor para cada modelo y sus consultas
@@ -72,6 +74,10 @@
     Route::post('/products', [PostProducts::class,'postProducts']);
 
     Route::put('/products/:id', [PutProducts::class,'putProducts']);
+
+    Route::get('/products', [GetAllProducts::class,'getAllProducts']);
+
+    Route::get('/products/:id', [GetProductsById::class,'getProductsById']);
 
     
     Route::dispatch();

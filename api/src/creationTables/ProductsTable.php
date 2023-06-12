@@ -19,7 +19,8 @@ class ProductsTable {
             id INT(11) AUTO_INCREMENT PRIMARY KEY,
             nameProduct VARCHAR(30) ,    
             stock INT(10) NOT NULL, 
-            unit VARCHAR(50) NOT NULL
+            unit VARCHAR(50) NOT NULL,
+            purchaseDate DATE NOT NULL
         )";
         
         $this->connection->query($query);

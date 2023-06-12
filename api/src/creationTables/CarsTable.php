@@ -24,7 +24,7 @@ class CarsTable {
             model VARCHAR(30)
         )";
         
-        $this->connection->query($query);
+        return $this->connection->query($query);
         
         }
     }

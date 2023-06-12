@@ -10,7 +10,17 @@
 
             $serviceModel = new Service();
 
-            return $serviceModel->update($id ,$data);
+            $result = $serviceModel->update($id ,$data);
+
+            if (!is_array($result)) {
+                
+                return ["status" => "updated"];
+                
+            } else {
+                
+                return $result;
+
+            }
             
         }
 

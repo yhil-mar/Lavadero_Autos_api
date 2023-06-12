@@ -10,7 +10,17 @@
 
             $orderModel = new Order();
 
-            return $orderModel->updateOrders($id ,$body);
+            $result = $orderModel->updateOrders($id ,$body);
+
+            if (!is_array($result)) {
+                
+                return ["status" => "updated"];
+                
+            } else {
+                
+                return $result;
+
+            }
             
         }
 

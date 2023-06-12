@@ -10,8 +10,18 @@
 
             $carModel = new Car();
 
-            return $carModel->update($id ,$data);
-            
+            $result = $carModel->update($id ,$data);
+
+            if (!is_array($result)) {
+                
+                return ["status" => "updated"];
+                
+            } else {
+                
+                return $result;
+
+            }
+
         }
 
     }

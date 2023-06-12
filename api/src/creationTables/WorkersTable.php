@@ -20,7 +20,7 @@ class WorkersTable {
             branch VARCHAR(15) NOT NULL
         )";
         
-        $this->connection->query($query);
+        return $this->connection->query($query);
         
         }
     }

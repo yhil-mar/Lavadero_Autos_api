@@ -44,33 +44,50 @@ class Order extends Model {
                                 case 'workers':
 
                                     $amountWorkers = count($elemValue);
-                                    $sqlService = "SELECT cost FROM services WHERE id = {$idService}";
-                                    $arregloCosto = $this->query($sqlService)->first();
-                                    $costo = $arregloCosto['cost'];
 
-                                    $fraccion = ceil($costo / $amountWorkers); // preguntar cuantos decimales dejar
+                                    $costResult = $this->whereTable('cost', 'services', 'id', $idService);
+
+                                    if (!is_array($costResult)) {
+                            
+                                        $costResult = array_values($costResult->first());
+                            
+                                    } else {
+                            
+                                        return $costResult;
+            
+                                    }
+
+                                    $cost = $costResult[0];
+
+                                    $fraccion = ceil($cost / $amountWorkers); // preguntar cuantos decimales dejar
                                     
                                     foreach($elemValue as $idWorker) {
 
                                         $sql = "INSERT INTO {$this->table} (orderService, carId, serviceId, workerId, fractionalCost, totalCost, orderDay, orderMonth, orderYear, orderHour)
-                                            VALUES ('$orderService', '$idVehicle', '$idService', '$idWorker', '$fraccion', '$costo', '$orderDay', '$orderMonth', '$orderYear', '$finalHour')";
+                                            VALUES ('$orderService', '$idVehicle', '$idService', '$idWorker', '$fraccion', '$cost', '$orderDay', '$orderMonth', '$orderYear', '$finalHour')";
 
-                                        $this->query($sql);
+                                        $result = $this->query($sql);
+
+                                        if (is_array($result)) {
+                            
+                                            return $result;
+                                
+                                        }
+
                                     }
 
                                     break;
 
                                 default:
+                                
                                     break;
+                                    
                             }
 
                         }
                     }
                 }
             }
-
-            return ['status' => 'Information uploaded'];
-
         }
 
         public function updateOrders($orderService, $body) {
@@ -85,9 +102,7 @@ class Order extends Model {
 
             $sql = "UPDATE {$this->table} SET {$fields} WHERE orderService = '{$orderService}'";
             
-            $this->query($sql);
-
-            return ["status" => "updated"];
+            return $this->query($sql);
 
         }
 
@@ -149,22 +164,34 @@ class Order extends Model {
 
                         $contadorServicios = $contadorServicios + 1;
 
-                        $sql = "SELECT * FROM cars WHERE licensePlate = '$currentLicense'";
-                        
-                        $vehicleResult = $this->query($sql);
-                        
-                        $vehicleResult = $vehicleResult->first();
+                        $vehicleResult = $this->whereTable('*', 'cars', 'licensePlate', $currentLicense);
+
+                        if (!is_array($vehicleResult)) {
+                
+                            $vehicleResult = $vehicleResult->first();
+                
+                        } else {
+                
+                            return $vehicleResult;
+
+                        }
                         
                         $finalArray[] = $vehicleResult;
                         
                         $finalArray[$contadorVehiculos]['services'] = array();
                         
 
-                        $sql = "SELECT serviceName, cost FROM services WHERE id = '$currentService'";
+                        $serviceResult = $this->whereTable('serviceName, cost', 'services', 'id', $currentService);
 
-                        $serviceResult = $this->query($sql);
-                        
-                        $serviceResult = $serviceResult->first();
+                        if (!is_array($serviceResult)) {
+                
+                            $serviceResult = $serviceResult->first();
+                
+                        } else {
+                
+                            return $serviceResult;
+
+                        }
 
                         $finalArray[$contadorVehiculos]['services'][] = $serviceResult;
                         
@@ -172,12 +199,18 @@ class Order extends Model {
                         
                         $finalArray[$contadorVehiculos]['services'][0]['workers'] = array();
                         
-                        
-                        $sql = "SELECT name FROM workers WHERE rut_passport = '$currentWorker'";
-                        
-                        $workerResult = $this->query($sql);
-                        
-                        $workerResult = array_values($workerResult->first());
+
+                        $workerResult = $this->whereTable('name', 'workers', 'rut_passport', $currentWorker);
+
+                        if (!is_array($workerResult)) {
+                
+                            $workerResult = array_values($workerResult->first());
+                
+                        } else {
+                
+                            return $workerResult;
+
+                        }
                         
                         $finalArray[$contadorVehiculos]['services'][0]['workers'] = $workerResult;
                         
@@ -197,11 +230,17 @@ class Order extends Model {
 
                             $contadorServicios = $contadorServicios + 1;
 
-                            $sql = "SELECT serviceName, cost FROM services WHERE id = '$currentService'";
+                            $serviceResult = $this->whereTable('serviceName, cost', 'services', 'id', $currentService);
 
-                            $serviceResult = $this->query($sql);
-                                    
-                            $serviceResult = $serviceResult->first();
+                            if (!is_array($serviceResult)) {
+                    
+                                $serviceResult = $serviceResult->first();
+                    
+                            } else {
+                    
+                                return $serviceResult;
+    
+                            }
 
                             array_push($finalArray[$contadorVehiculos]['services'], $serviceResult);
 
@@ -210,11 +249,17 @@ class Order extends Model {
                             $finalArray[$contadorVehiculos]['services'][$contadorServicios]['workers'] = array();
 
 
-                            $sql = "SELECT name FROM workers WHERE rut_passport = '$currentWorker'";
+                            $workerResult = $this->whereTable('name', 'workers', 'rut_passport', $currentWorker);
 
-                            $workerResult = $this->query($sql);
-                                    
-                            $workerResult = array_values($workerResult->first());
+                            if (!is_array($workerResult)) {
+                    
+                                $workerResult = array_values($workerResult->first());
+                    
+                            } else {
+                    
+                                return $workerResult;
+    
+                            }
     
                             $finalArray[$contadorVehiculos]['services'][$contadorServicios]['workers'] = $workerResult;
 
@@ -228,11 +273,17 @@ class Order extends Model {
 
                         } else {
 
-                            $sql = "SELECT name FROM workers WHERE rut_passport = '$currentWorker'";
+                            $workerResult = $this->whereTable('name', 'workers', 'rut_passport', $currentWorker);
 
-                            $workerResult = $this->query($sql);
-                                    
-                            $workerResult = array_values($workerResult->first());
+                            if (!is_array($workerResult)) {
+                    
+                                $workerResult = array_values($workerResult->first());
+                    
+                            } else {
+                    
+                                return $workerResult;
+    
+                            }
 
                             array_push($finalArray[$contadorVehiculos]['services'][$contadorServicios]['workers'], $workerResult[0]);
 

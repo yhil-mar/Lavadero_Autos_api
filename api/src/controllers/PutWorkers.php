@@ -10,7 +10,17 @@
 
             $workerModel = new Worker();
 
-            return $workerModel->update($id, $body);
+            $result = $workerModel->update($id, $body);
+
+            if (!is_array($result)) {
+                
+                return ["status" => "updated"];
+                
+            } else {
+                
+                return $result;
+
+            }
             
         }
     }

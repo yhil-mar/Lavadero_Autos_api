@@ -18,7 +18,7 @@ class ServicesTable {
             cost INT(13) NOT NULL            
         )";
         
-        $this->connection->query($query);
+        return $this->connection->query($query);
         
         }
     }

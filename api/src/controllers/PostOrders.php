@@ -10,7 +10,17 @@
 
             $orderModel = new Order();
 
-            return $orderModel->createRelation($body);
+            $result = $orderModel->createRelation($body);
+
+            if (!is_array($result)) {
+                            
+                return ["status" => "Information uploaded"];
+    
+            } else {
+    
+                return $result;
+
+            }
             
         }
     }

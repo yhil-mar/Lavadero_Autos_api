@@ -80,6 +80,20 @@
 
         }
 
+        // Consulta where pero especificando las columnas y la tabla de donde se seleccinará la información
+        public function whereTable($columns, $table, $column, $operator, $value = null) {
+
+            if ($value == null) {
+                $value = $operator;
+                $operator = '=';
+            }
+
+            $sql = "SELECT {$columns} FROM {$table} WHERE {$column} {$operator} '{$value}'";
+
+            return $this->query($sql);
+
+        }
+
         // Consulta para crear un registro en un modelo
         public function create($data) {
             
@@ -113,10 +127,7 @@
 
             $sql = "UPDATE {$this->table} SET {$fields} WHERE {$primaryKeyColumn} = '{$id}'";
 
-            $this->query($sql);            
-
-            // return $this->find($id);
-            return ["status" => "updated"];
+            return $this->query($sql);            
 
         }
 

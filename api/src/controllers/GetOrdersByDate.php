@@ -62,8 +62,15 @@
                       AND orderDay >= $startDay
                       AND orderDay <= $endDay";
                   
-                  return $orderModel->query($sql)->get();     
+                  $response = $orderModel->query($sql); 
+                  
+                  if (!is_array($response)) {
+                                
+                    return $response->get();
+    
+                }
 
+                   
             }
 
             else {

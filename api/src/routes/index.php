@@ -32,6 +32,12 @@
     use Src\Controllers\GetAllProducts;
     use Src\Controllers\GetProductsById;
 
+    // Controllers para /users
+    use Src\Controllers\PostUsers;
+    use Src\Controllers\PutUsers;
+    use Src\Controllers\GetAllUsers;
+
+
 
     // Por ahora se pondrán todas las rutas por acá, más adelante se modularizará mejor para cada modelo y sus consultas
 
@@ -78,6 +84,14 @@
     Route::get('/products', [GetAllProducts::class,'getAllProducts']);
 
     Route::get('/products/:id', [GetProductsById::class,'getProductsById']);
+
+    // Consultar para /products 
+    
+    Route::post('/users', [PostUsers::class,'postUsers']);
+
+    Route::put('/users/:id', [PutUsers::class,'putUsers']);
+
+    Route::get('/users', [GetAllUsers::class,'getAllUsers']);
 
     
     Route::dispatch();

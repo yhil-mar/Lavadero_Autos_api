@@ -62,11 +62,22 @@
                       AND orderDay >= $startDay
                       AND orderDay <= $endDay";
                   
-                  $response = $orderModel->query($sql); 
+                  $response = $orderModel->query($sql);                  
+                  
                   
                   if (!is_array($response)) {
                                 
-                    return $response->get();
+                    $arrayforedit = $response->get();
+
+                    $firstElement = reset($arrayforedit);
+
+                    unset($firstElement['totalCost']);
+
+                    $workerId = $firstElement['workerId'];
+
+                    echo ($workerId);
+
+                    return $firstElement;
     
                 }
 

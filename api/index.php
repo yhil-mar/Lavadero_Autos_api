@@ -14,6 +14,14 @@
     // Permitir que las cookies se incluyan en las solicitudes (si es necesario)
     header("Access-Control-Allow-Credentials: true");
 
+    if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+
+        header('HTTP/1.1 200 OK');
+
+        exit();
+
+    }
+
     require_once('config/credentialsDb.php');
 
     require_once('autoload.php');

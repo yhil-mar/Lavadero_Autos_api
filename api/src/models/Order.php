@@ -165,8 +165,10 @@ class Order extends Model {
                         $serviceResult = $this->query($sql);
                         
                         $serviceResult = $serviceResult->first();
-                        
+
                         $finalArray[$contadorVehiculos]['services'][] = $serviceResult;
+                        
+                        $finalArray[$contadorVehiculos]['services'][$contadorServicios]['orderService'] = $currentOrder;
                         
                         $finalArray[$contadorVehiculos]['services'][0]['workers'] = array();
                         
@@ -202,6 +204,8 @@ class Order extends Model {
                             $serviceResult = $serviceResult->first();
 
                             array_push($finalArray[$contadorVehiculos]['services'], $serviceResult);
+
+                            $finalArray[$contadorVehiculos]['services'][$contadorServicios]['orderService'] = $currentOrder;
         
                             $finalArray[$contadorVehiculos]['services'][$contadorServicios]['workers'] = array();
 

@@ -69,16 +69,44 @@
                                 
                     $arrayforedit = $response->get();
 
-                    $firstElement = reset($arrayforedit);
+                    $finalArray = reset($arrayforedit);
 
-                    unset($firstElement['totalCost']);
-
-                    $workerId = $firstElement['workerId'];
-
-                    echo ($workerId);
-
-                    return $firstElement;
-    
+                    foreach ($arrayforedit as &$item) {
+                        unset($item['totalCost']);
+                        unset($item['id']);
+                        unset($item['serviceId']);
+                    
+                        $workerId = $item['workerId'];
+                        $orderDay = $item['orderDay'];
+                        $orderMonth = $item['orderMonth'];
+                        $orderYear = $item['orderYear'];
+                    
+                        $orderDate = $orderYear . $orderMonth . $orderDay;
+                    
+                        unset($item['orderDay']);
+                        unset($item['orderMonth']);
+                        unset($item['orderYear']);
+                    
+                        $sql = "SELECT name FROM workers WHERE rut_passport = {$workerId}";
+                        $workerName = $orderModel->query($sql)->get();
+                        $item['workerName'] = $workerName;
+                        $item['workerName'] = $item['workerName'][0]['name'];
+                    
+                        $sql = "SELECT profitPercentage FROM workers WHERE rut_passport = {$workerId}";
+                        $profitPercentage = $orderModel->query($sql)->get();
+                        $item['profitPercentage'] = $profitPercentage;
+                        $item['profitPercentage'] = $item['profitPercentage'][0]['profitPercentage'];
+                    
+                        $sql = "SELECT goal FROM workers WHERE rut_passport = {$workerId}";
+                        $goal = $orderModel->query($sql)->get();
+                        $item['goal'] = $goal;
+                        $item['goal'] = $item['goal'][0]['goal'];
+                    
+                        $item['ordeDate'] = $orderDate;
+                    }
+                    
+                    return $arrayforedit;
+                        
                 }
 
                    

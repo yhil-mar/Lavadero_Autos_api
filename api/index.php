@@ -38,6 +38,8 @@
 
     require_once('src/creationTables/UsersTable.php');
 
+    require_once('src/creationTables/payrollTable.php');
+
     require_once('src/routes/index.php');
     
 ?>

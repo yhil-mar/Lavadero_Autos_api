@@ -17,7 +17,10 @@ class WorkersTable {
             address VARCHAR(25) NOT NULL,
             profitPercentage INT(3) NOT NULL,
             goal INT(10) NOT NULL,
-            branch VARCHAR(15) NOT NULL
+            branch VARCHAR(15) NOT NULL,
+            percentageAfterGoal INT(3) NOT NULL,
+            statusWorker ENUM('active', 'vacation', 'inactive') DEFAULT 'active'
+            
         )";
         
         return $this->connection->query($query);

@@ -23,7 +23,7 @@ class OrdersTable {
             orderMonth VARCHAR(2) NOT NULL,
             orderYear INT(4) NOT NULL,
             orderHour VARCHAR(5) NOT NULL,
-            orderStatus ENUM('pending', 'completed', 'cancelled pending', 'cancelled rejected') DEFAULT 'pending',
+            orderStatus ENUM('pending', 'completed', 'cancelled') DEFAULT 'pending',
             cancelReason VARCHAR(1000),
             FOREIGN KEY (carId) REFERENCES cars(id),
             FOREIGN KEY (serviceId) REFERENCES services(id),

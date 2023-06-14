@@ -25,6 +25,7 @@ class OrdersTable {
             orderYear INT(4) NOT NULL,
             orderHour VARCHAR(5) NOT NULL,
             orderStatus ENUM('pending', 'completed', 'cancelled') DEFAULT 'pending',
+            tip INT (15),
             invoiced INT(15),
             cancelReason VARCHAR(1000),
             FOREIGN KEY (carId) REFERENCES cars(id),

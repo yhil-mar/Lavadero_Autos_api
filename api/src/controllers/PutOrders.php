@@ -14,7 +14,7 @@
 
                 $tip = $body['tip'];
 
-                unset($body['tip']);
+                // unset($body['tip']);
                 
                 $result = $orderModel->updateOrders($id ,$body);
                 

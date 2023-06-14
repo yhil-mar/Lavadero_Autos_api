@@ -37,6 +37,9 @@
     use Src\Controllers\PutUsers;
     use Src\Controllers\GetAllUsers;
 
+    // Controllers para /payroll
+
+    use Src\Controllers\PostPayrolls;
 
 
     // Por ahora se pondrán todas las rutas por acá, más adelante se modularizará mejor para cada modelo y sus consultas
@@ -65,7 +68,7 @@
 
     Route::put('/services/:id', [PutServices::class,'putServices']);
 
-    // Consultar para /orders
+    // Consultas para /orders
 
     Route::post('/orders', [PostOrders::class,'postOrders']);
 
@@ -75,7 +78,7 @@
 
     Route::put('/orders/:orderService', [PutOrders::class,'putOrders']);
 
-    // Consultar para /products
+    // Consultas para /products
 
     Route::post('/products', [PostProducts::class,'postProducts']);
 
@@ -85,13 +88,17 @@
 
     Route::get('/products/:id', [GetProductsById::class,'getProductsById']);
 
-    // Consultar para /products 
+    // Consultas para /products 
     
     Route::post('/users', [PostUsers::class,'postUsers']);
 
     Route::put('/users/:id', [PutUsers::class,'putUsers']);
 
     Route::get('/users', [GetAllUsers::class,'getAllUsers']);
+
+    // Consultas para /payrolls
+
+    Route::post('/payrolls', [PostPayrolls::class,'postPayrolls']);
 
     
     Route::dispatch();

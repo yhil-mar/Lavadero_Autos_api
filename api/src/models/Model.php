@@ -65,6 +65,24 @@
             }
         }
 
+        // Consulta para traer todos los registros de una tabla
+        public function allTable($table) {
+
+            $sql = "SELECT * FROM {$table}";
+
+            $response = $this->query($sql);
+            
+            if (!is_array($response)) {
+                
+                return $response->get();
+                
+            } else {
+                
+                return $response;
+
+            }
+        }
+
         // Consulta para buscar registros. Se debe especificar la propiedad a buscar, un operador
         // que es opcional y puede ser (<, >, >=, <=) y finalmente un valor para la propiedad
         public function where($column, $operator, $value = null) {
@@ -109,6 +127,21 @@
             
         }
 
+        // Consulta para crear un registro en un modelo
+        public function createTable($data, $table) {
+            
+            $columns = array_keys($data);
+            $columns = implode(', ', $columns);
+            
+            $values = array_values($data);
+            $values = "'" . implode("', '", $values) . "'";
+            
+            $sql = "INSERT INTO {$table} ({$columns}) VALUES ({$values})";
+            
+            return $this->query($sql);
+            
+        }
+
         // Consulta para modificar un registro en un modelo
         public function update($id, $data) {
 
@@ -126,6 +159,28 @@
             $fields = implode(', ', $fields);
 
             $sql = "UPDATE {$this->table} SET {$fields} WHERE {$primaryKeyColumn} = '{$id}'";
+
+            return $this->query($sql);            
+
+        }
+
+        // Consulta para modificar un registro en un modelo
+        public function updateTable($id, $data, $table) {
+
+            $fields = [];
+
+            // Query para obtener la columna que contiene la PK de la tabla
+            $sqlPK = "SHOW KEYS FROM {$this->table} WHERE Key_name = 'PRIMARY'";
+
+            $primaryKeyColumn = $this->query($sqlPK)->first()['Column_name'];
+
+            foreach($data as $key => $value) {
+                $fields[] = "{$key} = '{$value}'";
+            }
+
+            $fields = implode(', ', $fields);
+
+            $sql = "UPDATE {$table} SET {$fields} WHERE {$primaryKeyColumn} = '{$id}'";
 
             return $this->query($sql);            
 

@@ -19,7 +19,7 @@ class OrdersTable {
             workerId INT,
             fractionalCost INT(15) NOT NULL,
             totalCost INT(15) NOT NULL,
-            discountDay INT(15),
+            discountDay INT(15) DEFAULT 0,
             orderDay VARCHAR(2) NOT NULL,
             orderMonth VARCHAR(2) NOT NULL,
             orderYear INT(4) NOT NULL,

@@ -45,11 +45,16 @@ class Order extends Model {
 
                                     $amountWorkers = count($elemValue);
 
-                                    $costResult = $this->whereTable('cost', 'services', 'id', $idService);
+                                    $costResult = $this->whereTable('cost, discountDay', 'services', 'id', $idService);
 
                                     if (!is_array($costResult)) {
                             
-                                        $costResult = array_values($costResult->first());
+                                        $costResult = $costResult->first();
+
+                                        $cost = $costResult['cost'];
+                                        $discount = $costResult['discountDay'];
+
+                                        $totalCost = $cost - $discount;
                             
                                     } else {
                             
@@ -57,14 +62,14 @@ class Order extends Model {
             
                                     }
 
-                                    $cost = $costResult[0];
+                                    // $fraccion = ceil($cost / $amountWorkers); // pago total a trabajador
 
-                                    $fraccion = ceil($cost / $amountWorkers); // preguntar cuantos decimales dejar
+                                    $fraccion = ceil($totalCost / $amountWorkers); // pago restando el descuento a trabajador
                                     
                                     foreach($elemValue as $idWorker) {
 
-                                        $sql = "INSERT INTO {$this->table} (orderService, carId, serviceId, workerId, fractionalCost, totalCost, orderDay, orderMonth, orderYear, orderHour)
-                                            VALUES ('$orderService', '$idVehicle', '$idService', '$idWorker', '$fraccion', '$cost', '$orderDay', '$orderMonth', '$orderYear', '$finalHour')";
+                                        $sql = "INSERT INTO {$this->table} (orderService, carId, serviceId, workerId, fractionalCost, totalCost, discountDay, orderDay, orderMonth, orderYear, orderHour)
+                                            VALUES ('$orderService', '$idVehicle', '$idService', '$idWorker', '$fraccion', '$totalCost', '$discount', '$orderDay', '$orderMonth', '$orderYear', '$finalHour')";
 
                                         $result = $this->query($sql);
 

@@ -41,30 +41,27 @@
                     $result = $result->get();
 
                     $previousOrder = 0;
-                    $finalArray = [];
+                    
+                    $invoiced = 0;
 
                     foreach($result as $order){
+
                         $currentOrder = $order['orderService'];
 
                         if($currentOrder != $previousOrder){
-                            $finalArray[]=$order;
-                            
-                        }
 
-                        // echo ($previousOrder . " - " . $currentOrder);
-                        // echo ('<br>');
+                            $invoiced = $invoiced + $order['invoiced'];
+
+                        }
                         
                         $previousOrder = $currentOrder;
                         
                     }
 
-                    return $finalArray;
-                    
-                    
-
-
+                    return $invoiced;
 
                 } else {
+
                     return $result;
                 
                 }                     

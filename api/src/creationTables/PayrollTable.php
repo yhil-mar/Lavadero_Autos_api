@@ -18,6 +18,7 @@ class PayrollTable {
             workerId INT(15) NOT NULL,
             goal INT(15) NOT NULL,
             profit INT (15) NOT NULL,
+            payment INT (15) NOT NULL,
             tip INT (15) DEFAULT 0,          
             statusBill ENUM('paid', 'pending') DEFAULT 'pending'
             

@@ -43,34 +43,64 @@
                             $workerId = $worker['workerId'];
 
                             $fractionalCost = $worker['fractionalCost'];
-                            
-                            $sql = "SELECT id, tip, profit FROM payroll WHERE date = $date AND workerId = $workerId";
-                            
-                            $result = $orderModel->query($sql);
-                                                        
-                            if (!is_array($result)) {
-                                
-                                $result = $result->first();
-                                
-                                $payrollBody = [];
 
-                                $payrollBody['profit'] = $result['profit'] + $fractionalCost;
+                            $workerPercentages = $orderModel->whereTable('profitPercentage, percentageAfterGoal', 'workers', 'rut_passport', $workerId);
 
-                                $payrollBody['tip'] = $result['tip'] + $tip;
+                            if (!is_array($workerPercentages)) {
 
-                                $payroll = $orderModel->updateTable($result['id'], $payrollBody, 'payroll');
+                                $workerPercentages = $workerPercentages->first();
 
-                                if (is_array($payroll)) {
+                                $profitPercentage = $workerPercentages['profitPercentage'];
+
+                                $percentageAfterGoal = $workerPercentages['percentageAfterGoal'];
                 
-                                    return $payroll;
+                                $sql = "SELECT id, goal, profit, tip FROM payroll WHERE date = $date AND workerId = $workerId";
+                                
+                                $result = $orderModel->query($sql);
+                                                            
+                                if (!is_array($result)) {
                                     
+                                    $result = $result->first();
+                                    
+                                    $payrollBody = [];
+    
+                                    $payrollBody['profit'] = $result['profit'] + $fractionalCost;
+
+                                    $profit = $payrollBody['profit'];
+    
+                                    $payrollBody['tip'] = $result['tip'] + $tip;
+
+                                    if ($profit < $result['goal']) {
+
+                                        $payrollBody['payment'] = $profit * ($profitPercentage / 100);
+
+                                    } else {
+                                       
+                                        $payrollBody['payment'] = $profit * ($percentageAfterGoal / 100);
+                                        
+                                    }
+
+                                    $payroll = $orderModel->updateTable($result['id'], $payrollBody, 'payroll');
+    
+                                    if (is_array($payroll)) {
+                    
+                                        return $payroll;
+                                        
+                                    }
+                                    
+                                } else {
+                                    
+                                    return $result;
+                    
                                 }
-                                
+
+                    
                             } else {
-                                
-                                return $result;
-                
+                    
+                                return $workerPercentages;
+    
                             }
+                            
 
                         }
 

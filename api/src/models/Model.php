@@ -187,8 +187,8 @@
         }
 
         // Consulta para eliminar un registro de un modelo
-        public function delete($id) {
-            $sql = "DELETE FROM {$this->table} WHERE id = {$id}";
+        public function delete($id,$column) {
+            $sql = "DELETE FROM {$this->table} WHERE {$column} = '{$id}'";
             $this->query($sql);
         }
 

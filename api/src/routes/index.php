@@ -25,6 +25,7 @@
     use Src\Controllers\GetOrders;
     use Src\Controllers\GetOrdersByDate;
     use Src\Controllers\PutOrders;
+    use Src\Controllers\DeleteOrders;
 
     // Controllers para /products
     use Src\Controllers\PostProducts;
@@ -81,6 +82,8 @@
 
     Route::put('/orders/:orderService', [PutOrders::class,'putOrders']);
 
+    Route::delete('/orders/:orderService', [DeleteOrders::class,'deleteOrders']);
+    
     // Consultas para /products
 
     Route::post('/products', [PostProducts::class,'postProducts']);

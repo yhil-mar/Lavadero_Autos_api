@@ -41,6 +41,8 @@
 
     use Src\Controllers\PostPayrolls;
     use Src\Controllers\GetPayrollByDay;
+    use Src\Controllers\GetPayrollByDate;
+    use Src\Controllers\PutPayrolls;
 
 
     // Por ahora se pondrán todas las rutas por acá, más adelante se modularizará mejor para cada modelo y sus consultas
@@ -100,8 +102,13 @@
     // Consultas para /payrolls
 
     Route::post('/payrolls', [PostPayrolls::class,'postPayrolls']);
+
+    Route::get('/payrolls/date', [GetPayrollByDate::class,'getPayrollByDate']);
+
     Route::get('/payrolls/:day', [GetPayrollByDay::class,'getPayrollByDay']);
 
+    Route::put('/payrolls/:ids', [PutPayrolls::class,'putPayrolls']);
     
     Route::dispatch();
+    
 ?>

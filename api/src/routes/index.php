@@ -91,7 +91,7 @@
 
     Route::get('/products/:id', [GetProductsById::class,'getProductsById']);
 
-    // Consultas para /products 
+    // Consultas para /users 
     
     Route::post('/users', [PostUsers::class,'postUsers']);
 

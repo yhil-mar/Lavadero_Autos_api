@@ -12,110 +12,63 @@
 
             if (isset($query) && !empty($query)) {
 
-                $amountQuery = count($query);
-                  
-                    foreach ($query as $queryKey => $queryValue) {
+                $startDate = $query['startDate'];
 
-                        switch ($queryKey) {
+                $endDate = $query['endDate'];
 
-                            case 'workerId':
+                $startYear = substr($startDate, 0, 4);
+                $startMonth = substr($startDate, 4, 2);
+                $startDay = substr($startDate, 6, 2);
 
-                                $workerId= $queryValue;
+                $endYear = substr($endDate, 0, 4);
+                $endMonth = substr($endDate, 4, 2);
+                $endDay = substr($endDate, 6, 2);
 
-                                break;
+                $sql = "SELECT * FROM orders 
+                WHERE orderStatus = 'completed' 
+                AND orderYear >= $startYear
+                AND orderYear <= $endYear
+                AND orderMonth >= $startMonth
+                AND orderMonth <= $endMonth
+                AND orderDay >= $startDay
+                AND orderDay <= $endDay";
 
-                            case 'date1':
 
-                                $startDate=$queryValue;                               
+                $result = $orderModel->query($sql);
+
+                if (!is_array($result)) {
+
+                    $result = $result->get();
+
+                    $previousOrder = 0;
+                    $finalArray = [];
+
+                    foreach($result as $order){
+                        $currentOrder = $order['orderService'];
+
+                        if($currentOrder != $previousOrder){
+                            $finalArray[]=$order;
                             
-                            break;
-
-                            case 'date2':
-
-                                $endDate=$queryValue;                                
-
-                            break;
-
-                            default:
-
-                            break;
-
                         }
 
-                    }
-
-                    $startYear = substr($startDate, 0, 4);
-                    $startMonth = substr($startDate, 4, 2);
-                    $startDay = substr($startDate, 6, 2);
-
-                    $endYear = substr($endDate, 0, 4);
-                    $endMonth = substr($endDate, 4, 2);
-                    $endDay = substr($endDate, 6, 2);
-        
-                    $sql = "SELECT * FROM orders 
-                      WHERE workerId = $workerId 
-                      AND orderStatus = 'completed' 
-                      AND orderYear >= $startYear
-                      AND orderYear <= $endYear
-                      AND orderMonth >= $startMonth
-                      AND orderMonth <= $endMonth
-                      AND orderDay >= $startDay
-                      AND orderDay <= $endDay";
-                  
-                  $response = $orderModel->query($sql);                  
-                  
-                  
-                  if (!is_array($response)) {
-                                
-                    $arrayforedit = $response->get();
-
-                    $finalArray = reset($arrayforedit);
-
-                    foreach ($arrayforedit as &$item) {
-                        unset($item['totalCost']);
-                        unset($item['id']);
-                        unset($item['serviceId']);
-                    
-                        $workerId = $item['workerId'];
-                        $orderDay = $item['orderDay'];
-                        $orderMonth = $item['orderMonth'];
-                        $orderYear = $item['orderYear'];
-                    
-                        $orderDate = $orderYear . $orderMonth . $orderDay;
-                    
-                        unset($item['orderDay']);
-                        unset($item['orderMonth']);
-                        unset($item['orderYear']);
-                    
-                        $sql = "SELECT name FROM workers WHERE rut_passport = {$workerId}";
-                        $workerName = $orderModel->query($sql)->get();
-                        $item['workerName'] = $workerName;
-                        $item['workerName'] = $item['workerName'][0]['name'];
-                    
-                        $sql = "SELECT profitPercentage FROM workers WHERE rut_passport = {$workerId}";
-                        $profitPercentage = $orderModel->query($sql)->get();
-                        $item['profitPercentage'] = $profitPercentage;
-                        $item['profitPercentage'] = $item['profitPercentage'][0]['profitPercentage'];
-                    
-                        $sql = "SELECT goal FROM workers WHERE rut_passport = {$workerId}";
-                        $goal = $orderModel->query($sql)->get();
-                        $item['goal'] = $goal;
-                        $item['goal'] = $item['goal'][0]['goal'];
-                    
-                        $item['ordeDate'] = $orderDate;
-                    }
-                    
-                    return $arrayforedit;
+                        // echo ($previousOrder . " - " . $currentOrder);
+                        // echo ('<br>');
                         
-                }
+                        $previousOrder = $currentOrder;
+                        
+                    }
 
-                   
-            }
+                    return $finalArray;
+                    
+                    
 
-            else {
 
-                return $orderModel->all();
 
+                } else {
+                    return $result;
+                
+                }                     
+           
             }
             
         }

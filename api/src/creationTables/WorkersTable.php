@@ -13,7 +13,7 @@ class WorkersTable {
         
         $query = "CREATE TABLE IF NOT EXISTS workers (
             rut_passport VARCHAR(15) PRIMARY KEY,
-            name VARCHAR(25) UNIQUE NOT NULL,
+            name VARCHAR(25) NOT NULL,
             address VARCHAR(25) NOT NULL,
             profitPercentage INT(3) NOT NULL,
             percentageAfterGoal INT(3) NOT NULL,

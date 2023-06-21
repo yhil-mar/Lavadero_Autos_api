@@ -26,7 +26,7 @@
                 
             } else {
                 
-                http_response_code(404);
+                // http_response_code(404);
                 return ["Query error: " => $this->connection->error];
 
             }

@@ -74,6 +74,8 @@
 
                                     $cancelOrder['orderDate'] = $orderDate;
 
+                                    $cancelOrder['orderHour'] = $order['orderHour'];
+
                                     $cancelOrder['cancelReason'] = $order['cancelReason'];
                                 
                                 } else {

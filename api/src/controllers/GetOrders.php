@@ -23,6 +23,7 @@
             }
 
             if (count($result) > 0) {
+
                 if($query['orderStatus'] === 'cancelled'){
                     
                     $previousOrder = 0;  
@@ -66,6 +67,8 @@
                                     $cancelOrder['orderService'] = $currentOrder;
 
                                     $cancelOrder['serviceName'] = $serviceName;
+
+                                    $cancelOrder['licensePlate'] = $carId;
 
                                     $cancelOrder['client'] = $clientName;
 

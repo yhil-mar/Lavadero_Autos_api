@@ -156,7 +156,7 @@ class Order extends Model {
                     $currentLicense = $service['carId'];
 
                     $currentService = $service['serviceId'];
-                    
+
                     $currentWorker = $service['workerId'];
 
                     $currentOrder = $service['orderService'];
@@ -186,7 +186,7 @@ class Order extends Model {
                         $finalArray[$contadorVehiculos]['services'] = array();
                         
 
-                        $serviceResult = $this->whereTable('serviceName, cost', 'services', 'id', $currentService);
+                        $serviceResult = $this->whereTable('serviceName, cost, discountDay', 'services', 'id', $currentService);
 
                         if (!is_array($serviceResult)) {
                 
@@ -235,7 +235,7 @@ class Order extends Model {
 
                             $contadorServicios = $contadorServicios + 1;
 
-                            $serviceResult = $this->whereTable('serviceName, cost', 'services', 'id', $currentService);
+                            $serviceResult = $this->whereTable('serviceName, cost, discountDay', 'services', 'id', $currentService);
 
                             if (!is_array($serviceResult)) {
                     

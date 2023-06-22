@@ -43,6 +43,7 @@
     use Src\Controllers\PostPayrolls;
     use Src\Controllers\GetPayrollByDay;
     use Src\Controllers\GetPayrollByDate;
+    use Src\Controllers\GetPayrollChart;
     use Src\Controllers\PutPayrolls;
 
 
@@ -107,6 +108,8 @@
     Route::post('/payrolls', [PostPayrolls::class,'postPayrolls']);
 
     Route::get('/payrolls/date', [GetPayrollByDate::class,'getPayrollByDate']);
+
+    Route::get('/payrolls/chart', [GetPayrollChart::class,'getPayrollChart']);
 
     Route::get('/payrolls/:day', [GetPayrollByDay::class,'getPayrollByDay']);
 

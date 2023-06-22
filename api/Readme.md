@@ -168,9 +168,11 @@ branch: Sucursal del trabajador
 statusWorker: Estado del trabajador (activo, vacaciones, inactivo)
 
 ##
-## Model.php
+## Model
 
-### Clase Model:
+
+### Model.php
+Clase Model: 
 \_\_construct(): El constructor de la clase Model establece la conexión a la base de datos.
 
 query($sql): Ejecuta una consulta a la base de datos y devuelve el resultado.

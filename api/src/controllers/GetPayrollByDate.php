@@ -12,54 +12,61 @@ class GetPayrollByDate {
 
         if (isset($query) && !empty($query)) {
 
-            $workerId = $query['workerId'];
-
-            $startDate = $query['startDate'];
-
-            $endDate = $query['endDate'];
-
-
-            $sql = "SELECT * FROM payroll WHERE date >= '$startDate' AND date <= '$endDate' AND workerId = '$workerId' AND statusBill = 'pending'";
-
+            $workerId = $query['workerId'];            
+            
+            $sql = "SELECT * FROM payroll WHERE workerId = '$workerId' AND statusBill = 'pending'";
+            
             $result = $payrollModel->query($sql);
-
+            
             if (!is_array($result)) {
                 
                 $result = $result->get();
 
-                $ids = null;
+                if(!empty($result)) {
 
-                $payment = 0;
+                    $startDate = $result[0]['date'];
+                
+                    $endDate = end($result)['date'];
 
-                $tip = 0;
+                    $ids = null;
 
-                foreach ($result as $day) {
+                    $payment = 0;
 
-                    $ids = $ids . $day['id'] . 'o';
+                    $tip = 0;
 
-                    $payment = $payment + $day['payment'];
+                    foreach ($result as $day) {
 
-                    $tip = $tip + $day['tip'];
+                        $ids = $ids . $day['id'] . 'o';
 
+                        $payment = $payment + $day['payment'];
+
+                        $tip = $tip + $day['tip'];
+
+                    }
+
+                    $ids = substr($ids, 0, -1);
+
+                    $finalObject = [];
+
+                    $finalObject['ids'] = $ids;
+
+                    $finalObject['date'] = $startDate . ' - ' . $endDate;
+
+                    $finalObject['workerName'] = $result[0]['workerName'];
+
+                    $finalObject['workerId'] = $result[0]['workerId'];
+
+                    $finalObject['payment'] = $payment;
+
+                    $finalObject['tip'] = $tip;
+
+                    return $finalObject;
+
+                } else {
+
+                    return ['status' => 'No results found'];
+                    
                 }
-
-                $ids = substr($ids, 0, -1);
-
-                $finalObject = [];
-
-                $finalObject['ids'] = $ids;
-
-                $finalObject['date'] = $startDate . ' - ' . $endDate;
-
-                $finalObject['workerName'] = $result[0]['workerName'];
-
-                $finalObject['workerId'] = $result[0]['workerId'];
-
-                $finalObject['payment'] = $payment;
-
-                $finalObject['tip'] = $tip;
-
-                return $finalObject;
 
             } else {
                 

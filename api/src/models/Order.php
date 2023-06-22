@@ -62,9 +62,9 @@ class Order extends Model {
             
                                     }
 
-                                    // $fraccion = ceil($cost / $amountWorkers); // pago total a trabajador
+                                    $fraccion = ceil($cost / $amountWorkers); // pago total a trabajador
 
-                                    $fraccion = ceil($totalCost / $amountWorkers); // pago restando el descuento a trabajador
+                                    // $fraccion = ceil($totalCost / $amountWorkers); // pago restando el descuento a trabajador
                                     
                                     foreach($elemValue as $idWorker) {
 

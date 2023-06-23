@@ -161,6 +161,8 @@ class Order extends Model {
 
                     $currentOrder = $service['orderService'];
 
+                    $currentInvoiced = $service['invoiced'];
+
                     if ($currentLicense != $previousLicense) {
                         
                         $contadorVehiculos = $contadorVehiculos + 1;
@@ -201,8 +203,10 @@ class Order extends Model {
                         $finalArray[$contadorVehiculos]['services'][] = $serviceResult;
                         
                         $finalArray[$contadorVehiculos]['services'][$contadorServicios]['orderService'] = $currentOrder;
+
+                        $finalArray[$contadorVehiculos]['services'][$contadorServicios]['invoiced'] = $currentInvoiced;
                         
-                        $finalArray[$contadorVehiculos]['services'][0]['workers'] = array();
+                        $finalArray[$contadorVehiculos]['services'][$contadorServicios]['workers'] = array();
                         
 
                         $workerResult = $this->whereTable('name', 'workers', 'rut_passport', $currentWorker);
@@ -250,6 +254,8 @@ class Order extends Model {
                             array_push($finalArray[$contadorVehiculos]['services'], $serviceResult);
 
                             $finalArray[$contadorVehiculos]['services'][$contadorServicios]['orderService'] = $currentOrder;
+
+                            $finalArray[$contadorVehiculos]['services'][$contadorServicios]['invoiced'] = $currentInvoiced;
         
                             $finalArray[$contadorVehiculos]['services'][$contadorServicios]['workers'] = array();
 

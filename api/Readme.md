@@ -253,7 +253,7 @@ getUsername(): Devuelve el nombre de usuario.
 
 getEmail(): Devuelve el correo electrónico del usuario.
 
-##Controllers
+### Controllers
 
 ###DeleteOrders.php:
 Elimina una orden creada indicando el id correspondiente.

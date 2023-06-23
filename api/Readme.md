@@ -253,4 +253,100 @@ getUsername(): Devuelve el nombre de usuario.
 
 getEmail(): Devuelve el correo electrónico del usuario.
 
+##Controllers
+
+###DeleteOrders.php:
+Elimina una orden creada indicando el id correspondiente.
+
+###GetAllProducts.php
+Trae todos los productos existentes en la base de datos.
+
+###GetAllServices.php
+Trae todos los servicios existentes en la base de datos.
+
+###GetAllUsers.php
+Trae todos los usuarios existentes en la base de datos.
+
+###GetCarByLicense.php
+Trae un vehiculo especificando la patente.
+
+###GetOrders.php
+Trae todas las ordenes existentes en la base de datos.
+
+###GetOrdersByDate.php
+Trae las ordenes entre fechas especificadas
+
+###GetPayrollByDate.php
+Trae lo comicionado por cada trabajador por un día especificado.
+
+###GetPayrollChart.php
+Trae el total de trabajadores y la comicion que se lleva hasta el momento entre fecha y fecha
+
+###GetProductsById.php
+Trae un producto en especifico por el id
+
+###GetWorkers.php
+Trae a todos los trabajadores registrados en la base de datos.
+
+###PostCars.php
+Permite crear los vehiculos
+
+###PostOrders.php
+Permite crear las ordenes de los servicios
+
+###PostPayrolls.php
+Permite crea la nomina de los trabajadores por día.
+
+###PostProducts.php
+Permite crear los productos.
+
+###PostServices.php
+Permite crear los servicios.
+
+###PostUsers.php
+Permite crear los usuarios.
+
+###PostWorkers.php
+Permite crear a los trabajadores.
+
+###PutCars.php
+Permite modificar las caracteristicas de los carros.
+
+###PutOrders.php
+Permite modificar las caracteristicas de las ordenes.
+
+###PutPayrolls.php
+Permite modificar las caracteristicas de la nomina.
+
+###PutProducts.php
+Permite modificar las caracteristicas de los productos.
+
+###PutServices.php
+Permite modificar las caracteristicas de los servicios.
+
+###PutUsers.php
+Permite modificar las caracteristicas de los usuarios.
+
+###PutWorkers.php
+Permite modificar las caracteristicas de los trabajadores.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
